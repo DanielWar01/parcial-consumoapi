@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("partials/head.ejs") %>
+<body>
+    <%- include("partials/navigation.ejs") %>
+    <form action="/addDish" method="POST">
+        <div>
+            <input type="hidden" name="id" value="<%= id %>">
+        </div>
+        <div class="mb-3">
+            <label for="idDish" class="form-label">Id Plato</label>
+            <input type="text" class="form-control" id="idDish" name="idDish" value="<%= updatedDish.idDish %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" value="<%= updatedDish.name %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="calories" class="form-label">Calorías</label>
+            <input type="number" class="form-control" id="calories" name="calories" value="<%= updatedDish.calories %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="isVegetarian" class="form-label">¿Es vegetariano?</label>
+            <select class="form-select" id="isVegetarian" name="isVegetarian" value="<%= updatedDish.isVegetarian %>" required>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="value" class="form-label">Valor ($)</label>
+            <input type="number" class="form-control" id="value" name="value" value="<%= updatedDish.value %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="comments" class="form-label">Comentarios</label>
+            <textarea class="form-control" id="comments" name="comments" value="<%= updatedDish.comments %>" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>    
+    <h1>Registros encontrados</h1>
+    <% if (data.length) { %>
+        <div class="table-responsive">
+            <table class="table table-striped table-dark table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Id Plato</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Nombre</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Calorias</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Vegetariano</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Valor</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Comentarios</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(item => { %>
+                        <tr>
+                            <th scope="row"><%= item._id %></th>
+                            <td class="d-none d-sm-table-cell"><%= item.idDish %></td>
+                            <td class="d-none d-sm-table-cell"><%= item.name %></td>
+                            <td class="d-none d-sm-table-cell"><%= item.calories %></td>
+                            <td class="d-none d-sm-table-cell"><%= item.isVegetarian %></td>
+                            <td class="d-none d-sm-table-cell"><%= item.value %></td>
+                            <td class="d-none d-sm-table-cell"><%= item.comments %></td>
+                            <td class="d-none d-sm-table-cell">
+                                <form action="/editDish" method="POST"> 
+                                    <input type="hidden" name="id" value="<%= item._id %>">
+                                    <input type="hidden" name="idDish" value="<%= item.idDish %>">
+                                    <input type="hidden" name="name" value="<%= item.name %>">
+                                    <input type="hidden" name="calories" value="<%= item.calories %>">
+                                    <input type="hidden" name="isVegetarian" value="<%= item.isVegetarian %>">
+                                    <input type="hidden" name="value" value="<%= item.isVegetarian %>">
+                                    <input type="hidden" name="comments" value="<%= item.comments %>">
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                </form>
+                                <form action="/deleteDish" method="POST"> 
+                                    <input type="hidden" name="id" value="<%= item._id %>">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                            <td class="d-sm-none">
+                                <div><strong>Id plato:</strong> <%= item.idDish %></div>
+                                <div><strong>Nombre:</strong> <%= item.name %></div>
+                                <div><strong>Calorias:</strong> <%= item.calories %></div>
+                                <div><strong>Vegetariano:</strong> <%= item.isVegetarian %></div>
+                                <div><strong>Valor:</strong> <%= item.value %></div>
+                                <div><strong>Comentarios:</strong> <%= item.comments %></div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <p>Plato buscado no encontrado</p>
+    <% } %>
+</body>
+</html>
