@@ -40,7 +40,6 @@ module.exports = {
             if (!response.ok) {
                 throw new Error(`Error en la solicitud: ${response.status}`)
             }
-
             const data = await response.json()
             return data.data
         } catch (error) {

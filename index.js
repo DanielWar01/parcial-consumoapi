@@ -65,9 +65,17 @@ app.post('/addDish', async (req, res) => {
             value: parseFloat(req.body.value), 
             comments: req.body.comments
         };
+        const id = req.body.id;
+        console.log(id)
+        const dish = await findById(id);
+        if (dish){
+            const dishUpdate = await editDish(id, newDish);
+            console.log('Plato actualizado:', dishUpdate);
+        }else{
+            const addedDish = await addDish(newDish);
+            console.log('Plato agregado:', addedDish);
+        }
 
-        const addedDish = await addDish(newDish);
-        console.log('Plato agregado:', addedDish);
 
         res.redirect('/');
     } catch (error) {
@@ -78,18 +86,9 @@ app.post('/addDish', async (req, res) => {
 
 app.post('/editDish', async (req, res) => {
     const { id } = req.body; 
-    const updatedDish = {
-        idDish: req.body.idDish,
-        name: req.body.name,
-        calories: parseInt(req.body.calories),
-        isVegetarian: req.body.isVegetarian === 'true',
-        value: parseFloat(req.body.value),
-        comments: req.body.comments,
-    };
-    
     try {
-        const editedDish = await editDish(id, updatedDish);
         const data = await findAll();
+        const updatedDish = await findById(id);
         res.render('index', { data, id, updatedDish });
     } catch (error) {
         console.log('Error en la ruta /editDish:', error);

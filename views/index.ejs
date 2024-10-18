@@ -27,12 +27,12 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="value" class="form-label">Valor ($)</label>
+            <label for="value" class="form-label">Valor</label>
             <input type="number" class="form-control" id="value" name="value" value="<%= updatedDish.value %>" required>
         </div>
         <div class="mb-3">
             <label for="comments" class="form-label">Comentarios</label>
-            <textarea class="form-control" id="comments" name="comments" value="<%= updatedDish.comments %>" rows="3"></textarea>
+            <textarea class="form-control" id="comments" name="comments" rows="3"><%= updatedDish.comments %></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>    
@@ -65,12 +65,6 @@
                             <td class="d-none d-sm-table-cell">
                                 <form action="/editDish" method="POST"> 
                                     <input type="hidden" name="id" value="<%= item._id %>">
-                                    <input type="hidden" name="idDish" value="<%= item.idDish %>">
-                                    <input type="hidden" name="name" value="<%= item.name %>">
-                                    <input type="hidden" name="calories" value="<%= item.calories %>">
-                                    <input type="hidden" name="isVegetarian" value="<%= item.isVegetarian %>">
-                                    <input type="hidden" name="value" value="<%= item.isVegetarian %>">
-                                    <input type="hidden" name="comments" value="<%= item.comments %>">
                                     <button type="submit" class="btn btn-primary">Editar</button>
                                 </form>
                                 <form action="/deleteDish" method="POST"> 
